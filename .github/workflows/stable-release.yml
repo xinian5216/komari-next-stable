@@ -1,0 +1,67 @@
+name: Komari Next Stable Release
+
+# 由 release 发布事件触发；也可用 workflow_dispatch 指定一个已存在的 tag 重发
+# （GitHub 在 release 事件里使用 tag 自带的 workflow 定义，因此重发/补发需要 dispatch 入口）。
+#
+# 产物：dist-release.zip（Komari 主题包规范布局）+ SHA256SUMS + dist-release.zip.sha256
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "已存在的 release tag（重发时使用，例如 v1.4.19-stable.0）"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+
+jobs:
+  release:
+    if: ${{ github.event_name != 'release' || !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the released tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies (npm ci)
+        run: npm ci --no-audit --no-fund
+
+      - name: Lint (report only)
+        # 同 CI：上游基线自带 lint 问题，本 fork 不修改主题源码，故 lint 不阻断发布。
+        run: |
+          set -uo pipefail
+          npm run lint > lint-report.txt 2>&1 || echo "lint reported problems (see log)"
+          tail -20 lint-report.txt
+
+      - name: Build
+        run: npm run build
+
+      - name: Package, validate and checksum
+        run: |
+          set -euxo pipefail
+          bash scripts/package-theme.sh dist-release.zip
+          sha256sum dist-release.zip > SHA256SUMS
+          sha256sum dist-release.zip | awk '{print $1}' > dist-release.zip.sha256
+          cat SHA256SUMS
+
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euxo pipefail
+          gh release upload "${RELEASE_TAG}" \
+            dist-release.zip SHA256SUMS dist-release.zip.sha256 \
+            --clobber --repo "${{ github.repository }}"
