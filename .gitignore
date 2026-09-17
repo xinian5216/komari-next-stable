@@ -81,3 +81,9 @@ bundle-analysis.html
 
 # Testing
 *.lcov
+
+# 本 fork 的构建产物（不入库）
+/dist-release.zip
+/SHA256SUMS
+/dist-release.zip.sha256
+/lint-report.txt

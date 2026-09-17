@@ -1,5 +1,12 @@
 # Komari-Next
 
+> **Komari Stable mirror** — this repository (`xinian5216/komari-next-stable`) is a
+> community-maintained mirror of [Komari Next](https://github.com/tonyliuzj/komari-next).
+> It only adds reproducible builds, CI and supply-chain files; **the theme UI and functionality
+> are unchanged**. Original author: **Tony Liu (`tonyliuzj`)**; the MIT license and all credits are
+> kept intact. Upstream baseline and fork changes: [UPSTREAM.md](./UPSTREAM.md).
+> Production users must pin an immutable tag (e.g. `v1.4.19-stable.0`) — never `main` or
+> `releases/latest`.
 Komari-Next is a modern frontend for the Komari monitoring project.  
 It is built with **Next.js**, **TypeScript**, **Tailwind CSS** and **Shadcn UI** and packaged as a static site that can be used as a Komari theme.
 

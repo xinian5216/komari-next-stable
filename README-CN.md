@@ -1,5 +1,11 @@
 # Komari-Next
 
+> **Komari Stable 镜像仓库** —— 本仓库（`xinian5216/komari-next-stable`）是
+> [Komari Next](https://github.com/tonyliuzj/komari-next) 的社区维护镜像：只增加可复现构建、CI 与供应链文件，
+> **不修改主题 UI 与业务功能**。原作者为 **Tony Liu（`tonyliuzj`）**，MIT License 与全部 Credits 完整保留；
+> 上游基线与本 fork 改动见 [UPSTREAM.md](./UPSTREAM.md)。
+> 生产使用请 pin 到不可变 tag（例如 `v1.4.19-stable.0`），不要使用 `main` / `releases/latest`。
+
 Komari-Next 是 Komari 监控项目的现代化前端。  
 它基于 **Next.js**、**TypeScript**、**Tailwind CSS** 和 **Shadcn UI** 构建，并打包为可作为 Komari 主题使用的静态站点。
 
