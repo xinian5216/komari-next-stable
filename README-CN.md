@@ -13,7 +13,7 @@ Komari-Next 是 Komari 监控项目的现代化前端。
 
 [演示站点](https://probes.top)
 
-[下载主题文件](https://github.com/tonyliuzj/komari-next/releases/latest/download/dist-release.zip)
+[下载主题文件](https://github.com/xinian5216/komari-next-stable/releases)
 
 > 本仓库仅包含前端部分。你需要一个正在运行的 Komari 后端实例供该 UI 调用。或者，你也可以下载主题文件，并通过 Komari 管理后台上传；这是推荐的使用方式。
 
@@ -55,7 +55,7 @@ Komari-Next 是 Komari 监控项目的现代化前端。
 
 ## 快速开始
 
-* 直接[下载主题文件](https://github.com/tonyliuzj/komari-next/releases/latest/download/dist-release.zip)，并通过 Komari 管理后台上传，这是推荐方式。
+* 直接[下载主题文件](https://github.com/xinian5216/komari-next-stable/releases)，并通过 Komari 管理后台上传，这是推荐方式。
 
 ## 开发
 

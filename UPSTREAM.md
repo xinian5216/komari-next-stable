@@ -47,6 +47,12 @@
    本 fork 不修改主题源码，因此 CI / Release 中 lint 以**报告模式**运行（产物 `lint-report.txt`），
    不作为硬门禁；`npm ci` / `npm run build` / 主题包校验 / secret scan 仍是硬门禁。
 7. **新增文档**：本文件、`SECURITY.md`，以及 `README.md` / `README-CN.md` 顶部的 fork 说明。
+8. **供应链接管（`v1.4.19-stable.1` 起）**：`komari-theme.json` 的 `url` 由上游仓库改为本镜像
+   `https://github.com/xinian5216/komari-next-stable`，使 Komari 后台的"更新主题"跟随本镜像的
+   Release，而不是上游 latest。**作者字段仍为 `tonyliuzj`，MIT 许可、署名与 Credits 全部未动**，
+   也不涉及任何 UI / 主题业务源码改动。
+9. **`README.md` / `README-CN.md` 的"下载主题文件"链接**改指本镜像 Releases 页（其余上游链接：
+   预览图、跨语言链接、贡献者、Star History、页脚署名等**全部保留**）。
 
 > 未改动：`src/` 下任何源码、`komari-theme.json` 内容、`LICENSE`、署名与 Credits。
 

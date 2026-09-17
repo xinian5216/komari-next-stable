@@ -14,7 +14,7 @@ It is built with **Next.js**, **TypeScript**, **Tailwind CSS** and **Shadcn UI**
 
 [Demo](https://komari.probe.name)
 
-[Download theme file](https://github.com/tonyliuzj/komari-next/releases/latest/download/dist-release.zip)
+[Download theme file](https://github.com/xinian5216/komari-next-stable/releases)
 
 > This repository contains only the frontend. You will need a running Komari backend instance for the UI to talk to. Or you can download the theme file and upload it through Komari's admin dashboard, this would be the recommanded way.
 
@@ -58,7 +58,7 @@ It is built with **Next.js**, **TypeScript**, **Tailwind CSS** and **Shadcn UI**
 
 ## Getting Started
 
-- Simply [download theme file](https://github.com/tonyliuzj/komari-next/releases/latest/download/dist-release.zip) and upload it through Komari's admin dashboard, this would be the recommanded way.
+- Simply [download theme file](https://github.com/xinian5216/komari-next-stable/releases) and upload it through Komari's admin dashboard, this would be the recommanded way.
 
 ## Dev
 
