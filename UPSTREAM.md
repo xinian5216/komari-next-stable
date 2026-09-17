@@ -54,7 +54,8 @@
 9. **`README.md` / `README-CN.md` 的"下载主题文件"链接**改指本镜像 Releases 页（其余上游链接：
    预览图、跨语言链接、贡献者、Star History、页脚署名等**全部保留**）。
 
-> 未改动：`src/` 下任何源码、`komari-theme.json` 内容、`LICENSE`、署名与 Credits。
+> 未改动：`src/` 下任何源码、`LICENSE`、作者署名与 Credits。`komari-theme.json` 仅把更新 URL
+> 切换到本镜像，其余主题身份与配置保持上游原样。
 
 ## 4. 溯源方法
 
