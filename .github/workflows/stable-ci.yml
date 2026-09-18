@@ -55,7 +55,7 @@ jobs:
         run: sha256sum dist-release.zip | tee SHA256SUMS
 
       - name: Upload the validated package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist-release
           path: |
