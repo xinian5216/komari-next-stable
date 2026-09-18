@@ -10,11 +10,6 @@ on:
       - ".github/workflows/security-scan.yml"
   pull_request:
     branches: [stable]
-    paths:
-      - "src/**"
-      - "package.json"
-      - "package-lock.json"
-      - ".github/workflows/security-scan.yml"
   schedule:
     - cron: "17 3 * * *"
   workflow_dispatch:
@@ -57,3 +52,14 @@ jobs:
       - uses: github/codeql-action/analyze@v4
         with:
           category: /language:javascript-typescript
+
+  security-gate:
+    name: security-gate
+    if: ${{ always() }}
+    needs: [production-dependencies, codeql]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require dependency and CodeQL scans
+        run: |
+          test "${{ needs.production-dependencies.result }}" = success
+          test "${{ needs.codeql.result }}" = success
