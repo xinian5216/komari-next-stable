@@ -63,3 +63,12 @@ jobs:
             SHA256SUMS
             lint-report.txt
           if-no-files-found: error
+
+  required-gate:
+    name: required-gate
+    if: ${{ always() }}
+    needs: [build-and-validate]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require the validated theme package
+        run: test "${{ needs.build-and-validate.result }}" = success
