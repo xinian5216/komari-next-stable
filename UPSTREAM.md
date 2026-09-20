@@ -57,6 +57,9 @@
     `km-login-dialog` / `km-login-form` 稳定挂载类，使 `komari-passkey` 的 HTML 注入能够找到
     登录入口。该改动不改变密码/OAuth 流程、视觉布局、Komari API 或已注册凭据；CI 与 Release
     均运行 `test:plugin-hooks` 合同检查，防止后续重构误删挂载点。
+11. **移除遗留生产 SSH 部署**：删除已停用但仍保留 `PRODUCTION_SSH_KEY`、root SSH 与
+    `rsync --delete` 的 `development.yaml`；所有保留的第三方 Actions 固定到完整 commit SHA，
+    stable CI 自动拒绝浮动 tag 和缺失精确版本注释的引用。
 
 > `src/` 仅包含上述登录兼容类差异；`LICENSE`、作者署名与 Credits 未改动。`komari-theme.json`
 > 仅把更新 URL 切换到本镜像，其余主题身份与配置保持上游原样。
