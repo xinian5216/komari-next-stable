@@ -17,6 +17,11 @@ import { usePublicInfo } from "@/contexts/PublicInfoContext";
 import Tips from "../ui/tips";
 import { CircleFadingArrowUp } from "lucide-react";
 import { useRPC2Call } from "@/contexts/RPC2Context";
+import {
+  KOMARI_STABLE_RELEASES_API,
+  selectNewerStableReleases,
+  type GithubReleaseInfo,
+} from "@/utils/serverRelease";
 
 // 将JSON配置转换为类型安全的菜单项数组 (基础静态菜单)
 const baseMenuItems = (menuConfig as { menu: MenuItem[] }).menu;
@@ -50,15 +55,6 @@ const AdminPanelBar = ({ content }: AdminPanelBarProps) => {
   } | null>(null);
 
   // GitHub 最新发布信息与更新检测
-  interface GithubReleaseInfo {
-    tag_name: string;
-    name?: string;
-    body?: string;
-    html_url: string;
-    published_at?: string;
-    draft?: boolean;
-    prerelease?: boolean;
-  }
   const [latestRelease, setLatestRelease] = useState<GithubReleaseInfo | null>(
     null
   );
@@ -128,26 +124,6 @@ const AdminPanelBar = ({ content }: AdminPanelBarProps) => {
     fetchVersionInfo();
   }, []);
 
-  // 规范化版本为 [major, minor, patch] 数组，忽略前缀 v 和后缀
-  function parseSemver(input?: string | null): number[] | null {
-    if (!input) return null;
-    const s = String(input).trim().replace(/^v/i, "");
-    const match = s.match(/^(\d+)\.(\d+)\.(\d+)/);
-    if (!match) return null;
-    return [Number(match[1]), Number(match[2]), Number(match[3])];
-  }
-
-  function isNewerVersion(latest?: string | null, current?: string | null) {
-    const a = parseSemver(latest);
-    const b = parseSemver(current);
-    if (!a || !b) return false;
-    for (let i = 0; i < 3; i++) {
-      if (a[i] > b[i]) return true;
-      if (a[i] < b[i]) return false;
-    }
-    return false;
-  }
-
   // 获取 GitHub releases 列表，并筛选出“比当前版本新的所有 release”
   useEffect(() => {
     let ignore = false;
@@ -157,7 +133,7 @@ const AdminPanelBar = ({ content }: AdminPanelBarProps) => {
     async function loadReleases() {
       try {
         const resp = await fetch(
-          "https://api.github.com/repos/komari-monitor/komari/releases?per_page=100",
+          KOMARI_STABLE_RELEASES_API,
           {
             headers: {
               Accept: "application/vnd.github+json",
@@ -168,9 +144,7 @@ const AdminPanelBar = ({ content }: AdminPanelBarProps) => {
         if (!resp.ok) throw new Error(`GitHub HTTP ${resp.status}`);
         const data: GithubReleaseInfo[] = await resp.json();
         if (ignore) return;
-        const valid = (data || [])
-          .filter(r => !r.draft && !r.prerelease)
-          .filter(r => isNewerVersion(r?.tag_name || r?.name, currentVersion));
+        const valid = selectNewerStableReleases(data || [], currentVersion);
         setReleasesSince(valid);
         setLatestRelease(valid.length ? valid[0] : null);
         setUpdateAvailable(valid.length > 0);

@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint .",
     "test:plugin-hooks": "node ./script/check-plugin-login-hooks.mjs",
+    "test:server-updates": "node --experimental-strip-types --test ./script/server-release-version.test.ts",
     "preview": "next start",
     "i18n:sync": "node ./script/i18n-sync.mjs",
     "i18n:sync:dry": "node ./script/i18n-sync.mjs --dry-run"
