@@ -27,7 +27,7 @@
 
 ## 3. 本 fork 的改动（相对上游基线 `914761b`）
 
-本 fork **只做镜像、自持构建与供应链独立**，**不修改主题 UI 与业务功能**。
+本 fork 以镜像、自持构建和供应链独立为主，只接受不改变既有视觉与业务逻辑的必要兼容修复。
 
 1. **新增 CI**（`.github/workflows/stable-ci.yml`）：`npm ci` → `npm run lint` → `npm run build` →
    主题包校验 → 产出 `dist-release.zip` 与 `SHA256SUMS`。
@@ -53,9 +53,13 @@
    也不涉及任何 UI / 主题业务源码改动。
 9. **`README.md` / `README-CN.md` 的"下载主题文件"链接**改指本镜像 Releases 页（其余上游链接：
    预览图、跨语言链接、贡献者、Star History、页脚署名等**全部保留**）。
+10. **Passkey 插件登录兼容（Issue #14）**：为 Next 登录对话框和表单容器补齐核心 Web 已有的
+    `km-login-dialog` / `km-login-form` 稳定挂载类，使 `komari-passkey` 的 HTML 注入能够找到
+    登录入口。该改动不改变密码/OAuth 流程、视觉布局、Komari API 或已注册凭据；CI 与 Release
+    均运行 `test:plugin-hooks` 合同检查，防止后续重构误删挂载点。
 
-> 未改动：`src/` 下任何源码、`LICENSE`、作者署名与 Credits。`komari-theme.json` 仅把更新 URL
-> 切换到本镜像，其余主题身份与配置保持上游原样。
+> `src/` 仅包含上述登录兼容类差异；`LICENSE`、作者署名与 Credits 未改动。`komari-theme.json`
+> 仅把更新 URL 切换到本镜像，其余主题身份与配置保持上游原样。
 
 ## 4. 溯源方法
 

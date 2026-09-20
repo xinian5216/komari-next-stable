@@ -46,6 +46,9 @@ jobs:
           npm run lint > lint-report.txt 2>&1 || echo "lint reported problems (see log)"
           tail -20 lint-report.txt
 
+      - name: Verify plugin login compatibility hooks
+        run: npm run test:plugin-hooks
+
       - name: Build
         run: npm run build
 

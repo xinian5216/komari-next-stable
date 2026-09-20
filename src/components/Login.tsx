@@ -190,7 +190,7 @@ const LoginDialogContent = ({
       <DialogTrigger asChild>
         {trigger ? trigger : <Button>{t("login.title")}</Button>}
       </DialogTrigger>
-      <DialogContent className="max-w-[450px]">
+      <DialogContent className="km-login-dialog max-w-[450px]">
         <DialogTitle>{t("login.title")}</DialogTitle>
         <DialogDescription className="mb-4">
           <div className="flex justify-center flex-col gap-2">
@@ -199,6 +199,7 @@ const LoginDialogContent = ({
           </div>
         </DialogDescription>
         <Box
+          className="km-login-form"
           onSubmit={(e) => {
             e.preventDefault();
             if (isFormValid && !isLoading) {

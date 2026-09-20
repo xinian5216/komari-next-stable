@@ -8,6 +8,7 @@
     "build": "next build && node ./script/protect-komari-placeholders.mjs",
     "start": "next start",
     "lint": "eslint .",
+    "test:plugin-hooks": "node ./script/check-plugin-login-hooks.mjs",
     "preview": "next start",
     "i18n:sync": "node ./script/i18n-sync.mjs",
     "i18n:sync:dry": "node ./script/i18n-sync.mjs --dry-run"
