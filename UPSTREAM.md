@@ -60,6 +60,10 @@
 11. **移除遗留生产 SSH 部署**：删除已停用但仍保留 `PRODUCTION_SSH_KEY`、root SSH 与
     `rsync --delete` 的 `development.yaml`；所有保留的第三方 Actions 固定到完整 commit SHA，
     stable CI 自动拒绝浮动 tag 和缺失精确版本注释的引用。
+12. **修复后台 Server 更新提示**：Next 后台左上角改为查询本维护线
+    `xinian5216/komari-stable` 的 Releases，并按 `[major, minor, patch, stable revision]` 比较
+    `vX.Y.Z-stable.N`。这使同一基础版本内的 `.3 -> .5` 能正确提示，同时排除草稿、预发布与
+    非 Stable 标签；CI / Release 均运行对应回归测试。
 
 > `src/` 仅包含上述登录兼容类差异；`LICENSE`、作者署名与 Credits 未改动。`komari-theme.json`
 > 仅把更新 URL 切换到本镜像，其余主题身份与配置保持上游原样。
