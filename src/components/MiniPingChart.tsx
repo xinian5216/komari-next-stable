@@ -283,7 +283,7 @@ const MiniPingChart = ({
               <ChartTooltip
                 cursor={false}
                 content={<CustomTooltip />}
-                allowEscapeViewBox={{ x: true, y: true }}
+                allowEscapeViewBox={{ x: false, y: true }}
                 wrapperStyle={{ pointerEvents: "auto", zIndex: 20 }}
               />
               <ChartLegend
