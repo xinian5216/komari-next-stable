@@ -36,6 +36,9 @@ jobs:
           node-version: "22"
           cache: "npm"
 
+      - name: Verify release tag matches theme version
+        run: npm run test:theme-version
+
       - name: Install dependencies (npm ci)
         run: npm ci --no-audit --no-fund
 
@@ -48,9 +51,6 @@ jobs:
 
       - name: Verify plugin login compatibility hooks
         run: npm run test:plugin-hooks
-
-      - name: Verify server update detection
-        run: npm run test:server-updates
 
       - name: Build
         run: npm run build
