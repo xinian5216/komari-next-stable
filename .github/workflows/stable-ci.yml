@@ -41,8 +41,8 @@ jobs:
       - name: Verify plugin login compatibility hooks
         run: npm run test:plugin-hooks
 
-      - name: Verify server update detection
-        run: npm run test:server-updates
+      - name: Verify stable theme version
+        run: npm run test:theme-version
 
       - name: Build
         run: npm run build
