@@ -507,3 +507,62 @@ body, * {
     radial-gradient(at 40% 0%, oklch(0.5 0.2 350 / 0.12) 0px, transparent 50%),
     radial-gradient(at 60% 100%, oklch(0.5 0.2 10 / 0.12) 0px, transparent 50%);
 }
+
+/* The Passkey plugin injects a Radix-style button into this login slot.
+   Next uses its own button styles, so style the injected control locally. */
+.km-login-alternatives {
+  margin-top: 0.75rem;
+}
+
+.km-login-alternatives:empty {
+  display: none;
+}
+
+.km-login-alternatives[data-password-login="true"]:not(:empty)::before {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 0.125rem 0;
+  background: var(--border);
+}
+
+.km-login-alternatives > .km-passkey-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent-8);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--accent-3);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  cursor: pointer;
+  transition: background-color 150ms, border-color 150ms;
+}
+
+.km-login-alternatives > .km-passkey-login:hover:not(:disabled) {
+  background: var(--accent-4);
+  border-color: var(--accent-9);
+}
+
+.km-login-alternatives > .km-passkey-login:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.km-login-alternatives > .km-passkey-login:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.km-login-dialog .km-passkey-error {
+  margin-top: 0.5rem;
+  color: var(--destructive);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
