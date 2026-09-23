@@ -264,10 +264,14 @@ const LoginDialogContent = ({
                 </Button>
               </>
             )}
+          </Flex>
+          <div className="rt-Flex km-login-alternatives flex flex-col gap-3"
+            data-password-login={passwordLoginEnabled}>
             {oauthEnabled && (
               <Button
                 onClick={startOAuthLogin}
                 variant={passwordLoginEnabled ? "outline" : "default"}
+                className="w-full border border-[var(--border)]"
                 disabled={isLoading}
                 type="button"
               >
@@ -282,7 +286,7 @@ const LoginDialogContent = ({
                 })}
               </Button>
             )}
-          </Flex>
+          </div>
         </Box>
       </DialogContent>
     </Dialog>
