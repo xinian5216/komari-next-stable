@@ -19,7 +19,7 @@
 - 生产资产只从不可变 stable tag 构建；禁止依赖 `main`、`latest` 或未校验下载。
 - 主题 ZIP 必须保持根目录 `komari-theme.json` / `preview.png` / `dist/` 布局，并通过路径穿越、
   符号链接、文件数和体积限制检查。
-- Komari 模板占位符必须经过 `protect-komari-placeholders.mjs`，不能被 Next.js 构建转义或改写。
+- Komari 模板占位符必须经过 `script/protect-komari-placeholders.mjs`（`npm run build` 已调用），不能被 Next.js 构建转义或改写。
 - 不得覆盖既有 tag/Release；修复必须递增 stable tag。
 
 ## 提交前检查
@@ -27,6 +27,8 @@
 ```bash
 npm ci
 npm run lint
+npm run test:plugin-hooks
+npm run test:theme-version
 npm run build
 bash scripts/package-theme.sh
 python3 scripts/validate-theme-package.py dist-release.zip
