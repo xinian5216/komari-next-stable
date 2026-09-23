@@ -44,7 +44,7 @@
 6. **修正 `package.json` 的 lint 入口**：上游仍写 `next lint`，但 Next 16 已移除该命令
    （原脚本在本 fork 无法运行）。改为 `eslint .`（仓库自带 `eslint.config.js`，eslint ^9），
    **未触碰任何 lint 规则与业务源码**。上游 `src/` 在 `1.4.19` 基线自带 **23 error / 29 warning**，
-   本 fork 不修改主题源码，因此 CI / Release 中 lint 以**报告模式**运行（产物 `lint-report.txt`），
+   本 fork 的 `src/` 改动限定为下述登录兼容与排版；CI / Release 中 lint 以**报告模式**运行（产物 `lint-report.txt`），
    不作为硬门禁；`npm ci` / `npm run build` / 主题包校验 / secret scan 仍是硬门禁。
 7. **新增文档**：本文件、`SECURITY.md`，以及 `README.md` / `README-CN.md` 顶部的 fork 说明。
 8. **供应链接管（`v1.4.19-stable.1` 起）**：`komari-theme.json` 的 `url` 由上游仓库改为本镜像
@@ -64,7 +64,12 @@
     `X.Y.Z-stable.N` 版本，使主题管理页能显示已安装的维护修订号；CI 校验格式，Release 流程
     额外要求 tag 必须严格等于 `v<manifest version>`，防止发布标签与安装包显示不一致。
 
-> `src/` 仅包含上述登录兼容类差异；`LICENSE`、作者署名与 Credits 未改动。`komari-theme.json`
+13. **Passkey 登录入口排版**（`v1.4.19-stable.6` 起）：Next 登录表单为插件预留 `rt-Flex km-login-alternatives` 插入区，
+    将 GitHub 与插件登录按钮排成独立行；`src/global.css` 仅在登录弹窗内为注入的
+    `km-passkey-login` 增加按钮、交互与错误提示样式。未修改插件的 WebAuthn 请求及验证流程，
+    `test:plugin-hooks` 同时守护该插入区和样式。
+
+> `src/` 仅包含上述登录兼容类与局部排版差异；`LICENSE`、作者署名与 Credits 未改动。`komari-theme.json`
 > 仅把更新 URL 与版本切换到本镜像维护线，其余主题身份与配置保持上游原样。
 
 ## 4. 溯源方法
