@@ -534,20 +534,19 @@ body, * {
   width: 100%;
   min-height: 2.5rem;
   padding: 0.5rem 1rem;
-  border: 1px solid var(--accent-8);
+  border: 1px solid var(--primary);
   border-radius: calc(var(--radius) - 2px);
-  background: var(--accent-3);
-  color: var(--foreground);
+  background: var(--primary);
+  color: var(--primary-foreground);
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;
   cursor: pointer;
-  transition: background-color 150ms, border-color 150ms;
+  transition: filter 150ms;
 }
 
 .km-login-alternatives > .km-passkey-login:hover:not(:disabled) {
-  background: var(--accent-4);
-  border-color: var(--accent-9);
+  filter: brightness(1.1);
 }
 
 .km-login-alternatives > .km-passkey-login:focus-visible {
