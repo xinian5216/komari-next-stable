@@ -2,10 +2,10 @@
 
 > **Komari Stable mirror** — this repository (`xinian5216/komari-next-stable`) is a
 > community-maintained mirror of [Komari Next](https://github.com/tonyliuzj/komari-next).
-> It only adds reproducible builds, CI and supply-chain files; **the theme UI and functionality
-> are unchanged**. Original author: **Tony Liu (`tonyliuzj`)**; the MIT license and all credits are
+> It maintains reproducible builds, CI and supply-chain files, and includes a small
+> Passkey plugin login compatibility hook in `src/`. The theme's normal UI and login flows remain unchanged. Original author: **Tony Liu (`tonyliuzj`)**; the MIT license and all credits are
 > kept intact. Upstream baseline and fork changes: [UPSTREAM.md](./UPSTREAM.md).
-> Production users must pin an immutable tag (e.g. `v1.4.19-stable.0`) — never `main` or
+> Production users must pin an immutable tag (e.g. `v1.4.19-stable.5`) — never `main` or
 > `releases/latest`.
 Komari-Next is a modern frontend for the Komari monitoring project.  
 It is built with **Next.js**, **TypeScript**, **Tailwind CSS** and **Shadcn UI** and packaged as a static site that can be used as a Komari theme.
@@ -34,7 +34,7 @@ It is built with **Next.js**, **TypeScript**, **Tailwind CSS** and **Shadcn UI**
 - Theme packaging suitable for Komari's theme system
 - **Extensive Customization Options:**
   - **6 Color Themes:** Default, Ocean, Sunset, Forest, Midnight, Rose
-  - **4 Card Layouts:** Classic, Modern, Minimal, Detailed - each with unique visual designs and element positioning
+  - **5 Card Layouts:** Classic, Modern, Minimal, Detailed, Compact - each with unique visual designs and element positioning
   - **4 Graph Designs:** Circle, Progress Bar, Bar Chart, Minimal - all following the selected color theme
   - **Customizable Status Cards:** Show/hide individual metrics on the dashboard
   - **Bring your own background!** Use an image URL to set it as the background.
@@ -97,10 +97,17 @@ This project is configured for static export (`output: "export"` in `next.config
 npm run build
 ```
 
-After the build completes:
+After the build completes, use `dist/` as part of a Komari theme bundle. For a standalone static server,
+configure that server to forward `/api/*` and `/themes/*` to Komari: the rewrites in `next.config.ts`
+serve local Next.js development only and are not included in the static export.
 
-- Serve the `dist` directory with any static web server, **or**
-- Use the contents of `dist` as part of a Komari theme bundle.
+To create the release-shaped, validated theme ZIP, run:
+
+```bash
+bash scripts/package-theme.sh
+```
+
+This produces `dist-release.zip` with `komari-theme.json`, `preview.png` and `dist/` at the ZIP root.
 
 ## Nginx Production Optimization Tips
 
@@ -154,8 +161,9 @@ This repository is designed to be used as a custom Komari theme.
    npm run build
    ```
 
-4. The static assets will be generated in the `dist` directory.  
-   Combine them with `komari-theme.json` as required by Komari’s theme system and package them according to the Komari documentation.
+4. The static assets will be generated in `dist/`. Run `bash scripts/package-theme.sh` to package and validate
+   the ZIP expected by the Komari server. For a differently named theme, adjust the package metadata and validator's
+   `--expected-short` setting before publishing.
 
 ## Scripts
 

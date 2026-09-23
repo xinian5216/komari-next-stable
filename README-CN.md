@@ -1,10 +1,10 @@
 # Komari-Next
 
 > **Komari Stable 镜像仓库** —— 本仓库（`xinian5216/komari-next-stable`）是
-> [Komari Next](https://github.com/tonyliuzj/komari-next) 的社区维护镜像：只增加可复现构建、CI 与供应链文件，
-> **不修改主题 UI 与业务功能**。原作者为 **Tony Liu（`tonyliuzj`）**，MIT License 与全部 Credits 完整保留；
+> [Komari Next](https://github.com/tonyliuzj/komari-next) 的社区维护镜像：维护可复现构建、CI 与供应链，
+> 并在 `src/` 增加了 Passkey 插件登录兼容挂载类；常规主题界面及登录流程未变。原作者为 **Tony Liu（`tonyliuzj`）**，MIT License 与全部 Credits 完整保留；
 > 上游基线与本 fork 改动见 [UPSTREAM.md](./UPSTREAM.md)。
-> 生产使用请 pin 到不可变 tag（例如 `v1.4.19-stable.0`），不要使用 `main` / `releases/latest`。
+> 生产使用请 pin 到不可变 tag（例如 `v1.4.19-stable.5`），不要使用 `main` / `releases/latest`。
 
 Komari-Next 是 Komari 监控项目的现代化前端。  
 它基于 **Next.js**、**TypeScript**、**Tailwind CSS** 和 **Shadcn UI** 构建，并打包为可作为 Komari 主题使用的静态站点。
@@ -31,7 +31,7 @@ Komari-Next 是 Komari 监控项目的现代化前端。
 * **丰富的自定义选项：**
 
   * **6 种配色主题：** Default、Ocean、Sunset、Forest、Midnight、Rose
-  * **4 种卡片布局：** Classic、Modern、Minimal、Detailed —— 每种都有独特的视觉设计与元素布局
+  * **5 种卡片布局：** Classic、Modern、Minimal、Detailed、Compact —— 每种都有独特的视觉设计与元素布局
   * **4 种图表样式：** Circle、Progress Bar、Bar Chart、Minimal —— 均会跟随所选配色主题
   * **可自定义状态卡片：** 可在仪表盘中显示/隐藏单项指标
   * **自带背景图！** 使用图片 URL 将其设置为背景。
@@ -94,10 +94,17 @@ npm run dev
 npm run build
 ```
 
-构建完成后：
+构建完成后，将 `dist/` 作为 Komari 主题包的一部分使用。若单独用静态 Web 服务器托管，
+需要由该服务器把 `/api/*` 和 `/themes/*` 转发到 Komari；`next.config.ts` 中的 rewrites
+只服务于本地 Next.js 开发，不会写进静态导出产物。
 
-* 使用任意静态 Web 服务器托管 `dist` 目录，**或**
-* 将 `dist` 内容作为 Komari 主题包的一部分使用。
+要生成并校验与 Release 一致的主题 ZIP，运行：
+
+```bash
+bash scripts/package-theme.sh
+```
+
+生成的 `dist-release.zip` 根目录包含 `komari-theme.json`、`preview.png` 与 `dist/`。
 
 ## Nginx 生产环境优化建议
 
@@ -151,8 +158,8 @@ gzip_vary on;
    npm run build
    ```
 
-4. 静态资源会生成到 `dist` 目录。
-   按照 Komari 主题系统要求，将其与 `komari-theme.json` 组合，并根据 Komari 文档进行打包。
+4. 静态资源会生成到 `dist/`。运行 `bash scripts/package-theme.sh` 可打包并校验服务端所需的 ZIP。
+   若制作其他名称的主题，发布前还需相应修改元数据及校验器的 `--expected-short` 参数。
 
 ## 脚本
 
