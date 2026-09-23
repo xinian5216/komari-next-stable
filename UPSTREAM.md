@@ -64,7 +64,7 @@
     `X.Y.Z-stable.N` 版本，使主题管理页能显示已安装的维护修订号；CI 校验格式，Release 流程
     额外要求 tag 必须严格等于 `v<manifest version>`，防止发布标签与安装包显示不一致。
 
-13. **Passkey 登录入口排版**：Next 登录表单为插件预留 `rt-Flex km-login-alternatives` 插入区，
+13. **Passkey 登录入口排版**（`v1.4.19-stable.6` 起）：Next 登录表单为插件预留 `rt-Flex km-login-alternatives` 插入区，
     将 GitHub 与插件登录按钮排成独立行；`src/global.css` 仅在登录弹窗内为注入的
     `km-passkey-login` 增加按钮、交互与错误提示样式。未修改插件的 WebAuthn 请求及验证流程，
     `test:plugin-hooks` 同时守护该插入区和样式。
