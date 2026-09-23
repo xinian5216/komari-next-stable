@@ -70,7 +70,7 @@
 ## 4. 溯源方法
 
 ```bash
-git diff upstream-baseline --stat     # 全部差异（应只有 CI / scripts / 文档）
+git diff upstream-baseline --stat     # 全部差异（还应包含已记录的登录挂载类与主题元数据变更）
 git diff upstream-baseline -- <path>  # 单文件差异
 git log --oneline upstream-baseline..stable
 ```
