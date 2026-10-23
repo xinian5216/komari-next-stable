@@ -90,3 +90,6 @@ bundle-analysis.html
 
 # Python release guard tests
 __pycache__/
+/tests/.fixtures/
+/test-results/
+/playwright-report/

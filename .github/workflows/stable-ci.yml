@@ -63,6 +63,23 @@ jobs:
       - name: Package the theme package
         run: bash scripts/package-theme.sh dist-release.zip
 
+      - name: Prepare checksum-pinned Passkey UI fixture
+        run: python3 scripts/tests/prepare_passkey_fixture.py
+
+      - name: Install Chromium for login UI regression
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify actual injected Passkey button layout
+        run: npm run test:plugin-ui
+
+      - name: Upload login UI regression evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: passkey-login-ui
+          path: test-results/
+          if-no-files-found: ignore
+
       - name: Checksums
         run: sha256sum dist-release.zip | tee SHA256SUMS
 
