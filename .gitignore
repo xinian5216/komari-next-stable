@@ -87,3 +87,6 @@ bundle-analysis.html
 /SHA256SUMS
 /dist-release.zip.sha256
 /lint-report.txt
+
+# Python release guard tests
+__pycache__/
