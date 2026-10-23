@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint .",
     "test:plugin-hooks": "node ./script/check-plugin-login-hooks.mjs",
+    "test:plugin-ui": "playwright test",
     "test:theme-version": "node ./script/check-theme-version.mjs",
     "preview": "next start",
     "i18n:sync": "node ./script/i18n-sync.mjs",
@@ -69,6 +70,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@playwright/test": "1.64.1",
     "@types/d3-geo": "^3.1.0",
     "@types/lodash": "^4.17.17",
     "@types/node": "22.15.17",

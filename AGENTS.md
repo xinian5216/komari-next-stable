@@ -36,6 +36,9 @@ npm run test:theme-version
 npm run i18n:sync:dry
 python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 npm run build
+python3 scripts/tests/prepare_passkey_fixture.py
+npx playwright install chromium
+npm run test:plugin-ui
 bash scripts/package-theme.sh
 python3 scripts/validate-theme-package.py dist-release.zip
 npm audit --omit=dev --audit-level=high
@@ -49,6 +52,8 @@ lint 在干净检出、构建前执行；已有生成目录时排除 `.next/` �
 不得把新增 lint 问题归入既有基线。生产 npm audit 通过不代表开发 / 构建依赖无漏洞，依赖维护
 还需评估完整报告；不得批量漂移锁文件或依赖构建时临时安装来掩盖缺失的开发依赖。
 fork 边界或产物来源变化时同步更新 `UPSTREAM.md`。
+登录兼容或按钮样式变动必须通过真实插件 UI 的浏览器回归（`tests/README.md`），
+不能仅依赖挂载类名合同；测试夹具须固定来源和 SHA256，不接触生产凭据。
 
 ## 合并与发布
 
