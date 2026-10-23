@@ -72,6 +72,12 @@
 > `src/` 仅包含上述登录兼容类与局部排版差异；`LICENSE`、作者署名与 Credits 未改动。`komari-theme.json`
 > 仅把更新 URL 与版本切换到本镜像维护线，其余主题身份与配置保持上游原样。
 
+14. **前端依赖安全维护**（`v1.4.19-stable.7`）：定向更新 Next 至 16.4.1、sharp 至 0.35.5、
+    source-map-js 至 1.2.2；移除无源码调用的 `http-proxy-middleware` 及其传递代理依赖，
+    消除 follow-redirects 与 micromatch → braces 链的生产依赖告警；将原传递依赖
+    `@types/node 22.15.17` 显式声明为开发依赖，避免 Next 构建临时安装。保持静态导出、主题身份、
+    登录插件挂载点与现有 UI / API 不变。
+
 ## 4. 溯源方法
 
 ```bash
