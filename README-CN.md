@@ -4,7 +4,7 @@
 > [Komari Next](https://github.com/tonyliuzj/komari-next) 的社区维护镜像：维护可复现构建、CI 与供应链，
 > 并在 `src/` 增加了 Passkey 插件登录兼容挂载类；常规主题界面及登录流程未变。原作者为 **Tony Liu（`tonyliuzj`）**，MIT License 与全部 Credits 完整保留；
 > 上游基线与本 fork 改动见 [UPSTREAM.md](./UPSTREAM.md)。
-> 生产使用请 pin 到不可变 tag（例如 `v1.4.19-stable.5`），不要使用 `main` / `releases/latest`。
+> 生产使用请从 [Releases 页面](https://github.com/xinian5216/komari-next-stable/releases) pin 到不可变 tag——为你的 Komari 版本选择最新的已验证 `v1.4.19-stable.N`——不要使用 `main` / `releases/latest`。
 
 Komari-Next 是 Komari 监控项目的现代化前端。  
 它基于 **Next.js**、**TypeScript**、**Tailwind CSS** 和 **Shadcn UI** 构建，并打包为可作为 Komari 主题使用的静态站点。
@@ -59,10 +59,10 @@ Komari-Next 是 Komari 监控项目的现代化前端。
 
 ## 开发
 
-克隆本仓库并安装依赖：
+克隆本仓库并安装依赖（按 lockfile 可复现安装）：
 
 ```bash
-npm install
+npm ci
 ```
 
 ### 配置 API 目标地址
@@ -128,6 +128,13 @@ location / {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 ```
+
+> ⚠️ **HEAD→GET 转换必须只作用于 `HEAD` 请求。** 上面这段配置是安全的，因为
+> `if ($request_method = "HEAD")` 守卫把重写限制在 HEAD 请求上。**不要**把 `proxy_method GET;`
+> 无条件套用到同时代理交互流量的 `location`（例如整个 `/` 块或 `/api/*`）：它会重写**所有**请求
+> 方法，`POST /api/login`、RPC2 等有状态调用会以 `GET` 到达后端并直接失效。如果希望使用
+> `proxy_method GET;`，请将其限制在专门的静态资源 `location`（例如
+> `location ~* \.(js|css|png|woff2)$`），API 路径单独使用保留原始方法的 `location`。
 
 ### 2. 开启 Gzip 压缩
 

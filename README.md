@@ -5,8 +5,9 @@
 > It maintains reproducible builds, CI and supply-chain files, and includes a small
 > Passkey plugin login compatibility hook in `src/`. The theme's normal UI and login flows remain unchanged. Original author: **Tony Liu (`tonyliuzj`)**; the MIT license and all credits are
 > kept intact. Upstream baseline and fork changes: [UPSTREAM.md](./UPSTREAM.md).
-> Production users must pin an immutable tag (e.g. `v1.4.19-stable.5`) — never `main` or
-> `releases/latest`.
+> Production users must pin an immutable tag from the
+> [Releases page](https://github.com/xinian5216/komari-next-stable/releases) — pick the newest
+> verified `v1.4.19-stable.N` for your Komari version — never `main` or `releases/latest`.
 Komari-Next is a modern frontend for the Komari monitoring project.  
 It is built with **Next.js**, **TypeScript**, **Tailwind CSS** and **Shadcn UI** and packaged as a static site that can be used as a Komari theme.
 
@@ -62,10 +63,10 @@ It is built with **Next.js**, **TypeScript**, **Tailwind CSS** and **Shadcn UI**
 
 ## Dev
 
-Clone this repository and install dependencies:
+Clone this repository and install dependencies (reproducible, lockfile-driven):
 
 ```bash
-npm install
+npm ci
 ```
 
 ### Configure API target
@@ -131,6 +132,14 @@ location / {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 ```
+
+> ⚠️ **Scope the HEAD→GET conversion to `HEAD` requests only.** The snippet above is safe because the
+> `if ($request_method = "HEAD")` guard limits the rewrite. Do **not** apply `proxy_method GET;`
+> unconditionally to a `location` that also proxies interactive traffic (e.g. the whole `/` block or
+> `/api/*`): it would rewrite **every** request method, so `POST /api/login`, RPC2 and other
+> state-changing calls would reach the backend as `GET` and break. If you prefer `proxy_method GET;`,
+> restrict it to a dedicated static-asset location (e.g. `location ~* \.(js|css|png|woff2)$`) and keep
+> API paths on their own `location` with the original method preserved.
 
 ### 2. Enable Gzip compression
 
